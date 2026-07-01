@@ -1,0 +1,186 @@
+@import "tailwindcss";
+
+@theme {
+  --color-accent: #d2452a;
+  --color-accent-light: #e86a52;
+  --color-cream: #faf4e8;
+  --color-cream-dark: #f3ead6;
+  --color-cream-paper: #fbf4e3;
+  --color-green-dark: #143d22;
+  --color-green-darker: #0f2e1a;
+  --color-green: #237a3a;
+  --color-green-light: #7bd68c;
+  --color-green-open: #3dbe54;
+  --color-gold: #e6a92b;
+  --color-text-muted: #3a4a3e;
+  --color-text-muted-2: #6a7458;
+  --color-text-muted-3: #9fb6a4;
+  --color-text-light: #cfe0d3;
+
+  --font-bricolage: "Bricolage Grotesque", sans-serif;
+  --font-hanken: "Hanken Grotesk", system-ui, sans-serif;
+
+  --radius-mm: 16px;
+  --radius-mm-lg: 20px;
+
+  --animate-marquee: mm-marquee 30s linear infinite;
+  --animate-marquee-rev: mm-marquee-rev 26s linear infinite;
+  --animate-float: mm-float 6s ease-in-out infinite;
+  --animate-bob: mm-bob 5.5s ease-in-out infinite;
+  --animate-spin-slow: mm-spin 20s linear infinite;
+  --animate-spin-slower: mm-spin 26s linear infinite;
+  --animate-checker: mm-checker 7s linear infinite;
+  --animate-rise: mm-rise 0.6s ease both;
+  --animate-ping: mm-ping 1.9s ease-out infinite;
+  --animate-reveal: mm-reveal 0.85s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes mm-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes mm-marquee-rev {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes mm-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-4deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(-4deg);
+  }
+}
+
+@keyframes mm-bob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(5deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(5deg);
+  }
+}
+
+@keyframes mm-spin {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes mm-checker {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 72px 0;
+  }
+}
+
+@keyframes mm-rise {
+  from {
+    opacity: 0;
+    transform: translateY(36px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes mm-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(46px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes mm-ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.65;
+  }
+  100% {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+}
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply m-0;
+  }
+
+  ::selection {
+    @apply bg-accent text-white;
+  }
+}
+
+@layer utilities {
+  .animate-rise-05 {
+    animation: mm-rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-delay: 0.05s;
+  }
+
+  .animate-rise-16 {
+    animation: mm-rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-delay: 0.16s;
+  }
+
+  .animate-rise-27 {
+    animation: mm-rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-delay: 0.27s;
+  }
+
+  .animate-rise-38 {
+    animation: mm-rise 0.7s ease both;
+    animation-delay: 0.38s;
+  }
+
+  .animate-rise-48 {
+    animation: mm-rise 0.7s ease both;
+    animation-delay: 0.48s;
+  }
+
+  .animate-rise-20 {
+    animation: mm-rise 0.8s ease both;
+    animation-delay: 0.2s;
+  }
+
+  .animate-reveal-view {
+    animation: mm-reveal 0.85s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 45%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
