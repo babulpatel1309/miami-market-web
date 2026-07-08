@@ -1,7 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-import { CONTACT, NAV_LINKS } from "@/constants/site";
+import { getWebsiteContent } from "@/lib/cms";
 
-export default function Nav() {
+export default async function Nav() {
+  const { nav_links: navLinks, site } = await getWebsiteContent();
+
   return (
     <header className="sticky top-0 z-60 border-b border-green-dark/12 bg-cream/90 backdrop-blur-md">
       <nav className="mx-auto flex max-w-[1240px] flex-wrap items-center justify-between gap-[18px] px-6 py-[13px]">
@@ -13,7 +15,7 @@ export default function Nav() {
           />
         </a>
         <div className="flex flex-wrap items-center gap-1">
-          {NAV_LINKS.map((l) => (
+          {navLinks.map((l) => (
             <a
               key={l.href}
               href={l.href}
@@ -23,10 +25,10 @@ export default function Nav() {
             </a>
           ))}
           <a
-            href={CONTACT.phoneHref}
+            href={site.phone_href}
             className="ml-1.5 whitespace-nowrap rounded-full bg-green px-[18px] py-2.5 text-[15px] font-bold text-white no-underline transition-[background,transform] duration-150 hover:-translate-y-px hover:bg-green-dark"
           >
-            {CONTACT.phone}
+            {site.phone}
           </a>
         </div>
       </nav>

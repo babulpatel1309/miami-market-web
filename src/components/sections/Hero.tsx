@@ -1,9 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
-import { DIRECTIONS_URL } from "@/constants/site";
 import { getWebsiteContent } from "@/lib/cms";
 
 export default async function Hero() {
-  const { hero } = await getWebsiteContent();
+  const { hero, site } = await getWebsiteContent();
 
   return (
     <section
@@ -36,7 +35,7 @@ export default async function Hero() {
             See the Menu
           </a>
           <a
-            href={DIRECTIONS_URL}
+            href={site.directions_url}
             target="_blank"
             rel="noopener"
             className="rounded-mm border-2 border-green-dark/25 bg-transparent px-[26px] py-[13px] text-base font-bold text-green-dark no-underline transition-[border-color,background] duration-150 hover:border-green hover:bg-green/6"

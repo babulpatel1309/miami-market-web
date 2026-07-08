@@ -1,16 +1,7 @@
-/* eslint-disable @next/next/no-img-element */
-import {
-  meats,
-  breads,
-  cheeses,
-  veggies,
-  veggieAddOns,
-  hotSandwiches,
-  soupSizes,
-} from "@/constants/menu";
-import type { Meat } from "@/types/menu.types";
+import type { MenuMeat } from "@/lib/cms";
+import { getWebsiteContent } from "@/lib/cms";
 
-function MeatRow({ meat }: { meat: Meat }) {
+function MeatRow({ meat }: { meat: MenuMeat }) {
   return (
     <div className="flex items-baseline gap-2 border-b border-green-dark/7 py-2">
       <span className="font-semibold">{meat.name}</span>
@@ -29,7 +20,7 @@ function BuildGroup({
 }: {
   title: string;
   items: string[];
-  addOns?: { name: string; price: string }[];
+  addOns?: { name: string; price_display: string }[];
 }) {
   return (
     <div>
@@ -50,7 +41,7 @@ function BuildGroup({
             key={a.name}
             className="rounded-full bg-gold/28 px-3 py-1.5 text-[13.5px] font-bold"
           >
-            {a.name} {a.price}
+            {a.name} {a.price_display}
           </span>
         ))}
       </div>
@@ -58,20 +49,22 @@ function BuildGroup({
   );
 }
 
-export default function MenuSection() {
+export default async function MenuSection() {
+  const { menu } = await getWebsiteContent();
+  const menuCopy = menu.copy;
+
   return (
     <section id="build" className="bg-green-dark py-[90px] text-cream">
       <div className="mx-auto max-w-[1240px] px-6">
         <div className="animate-reveal-view mx-auto mb-[50px] max-w-[660px] text-center">
           <span className="font-bricolage text-[13px] font-extrabold tracking-[0.16em] text-green-light uppercase">
-            Our Menu · Made To Order
+            {menuCopy.eyebrow}
           </span>
           <h2 className="mt-3.5 font-bricolage text-[clamp(34px,5.4vw,62px)] leading-[0.98] font-extrabold tracking-tight">
-            Deli Sandwiches
+            {menuCopy.heading}
           </h2>
           <p className="mt-[18px] text-[17px] leading-normal text-text-light">
-            Made to order — pick your meat, bread, cheese and the works.
-            Sandwiches are priced by meat.
+            {menuCopy.subheading}
           </p>
         </div>
 
@@ -82,20 +75,20 @@ export default function MenuSection() {
               <div className="flex items-center justify-center gap-3.5 text-accent">
                 <span className="h-[1.5px] w-[42px] bg-current opacity-50" />
                 <span className="font-bricolage text-xs font-extrabold tracking-[0.3em] uppercase">
-                  Deli Counter
+                  {menuCopy.deli_counter_eyebrow}
                 </span>
                 <span className="h-[1.5px] w-[42px] bg-current opacity-50" />
               </div>
               <h3 className="mt-3.5 font-bricolage text-[clamp(26px,3.6vw,40px)] font-extrabold tracking-tight">
-                Sandwiches, priced by the meat
+                {menuCopy.deli_counter_heading}
               </h3>
               <p className="mt-[9px] text-[14.5px] text-text-muted-2 italic">
-                Built to order on your choice of bread &amp; cheese
+                {menuCopy.deli_counter_subheading}
               </p>
             </div>
 
             <div className="mt-[34px] grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-x-11 gap-y-0.5">
-              {meats.map((m) => (
+              {menu.meats.map((m) => (
                 <MeatRow key={m.name} meat={m} />
               ))}
             </div>
@@ -103,18 +96,18 @@ export default function MenuSection() {
             <div className="my-10 flex items-center gap-4">
               <span className="h-px flex-1 bg-green-dark/18" />
               <span className="font-bricolage text-xs font-extrabold tracking-[0.26em] text-accent uppercase">
-                Build it your way
+                {menuCopy.build_your_way_label}
               </span>
               <span className="h-px flex-1 bg-green-dark/18" />
             </div>
 
             <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-[26px]">
-              <BuildGroup title="Breads" items={breads} />
-              <BuildGroup title="Cheeses" items={cheeses} />
+              <BuildGroup title={menuCopy.breads_group_title} items={menu.breads} />
+              <BuildGroup title={menuCopy.cheeses_group_title} items={menu.cheeses} />
               <BuildGroup
-                title="Veggies & Condiments"
-                items={veggies}
-                addOns={veggieAddOns}
+                title={menuCopy.veggies_group_title}
+                items={menu.veggies}
+                addOns={menu.addons}
               />
             </div>
           </div>
@@ -123,14 +116,14 @@ export default function MenuSection() {
         <div className="animate-reveal-view mt-[34px] flex flex-wrap items-center justify-between gap-5 rounded-mm bg-accent p-[30px]">
           <div>
             <h3 className="m-0 font-bricolage text-[28px] font-extrabold text-white">
-              Soups &amp; Chili
+              {menuCopy.soups_heading}
             </h3>
             <p className="mt-2 text-base text-white/92">
-              Chili and 1 or 2 soups of the day, always available.
+              {menuCopy.soups_subheading}
             </p>
           </div>
           <div className="flex flex-wrap gap-2.5 font-bricolage font-bold text-white">
-            {soupSizes.map((s) => (
+            {menu.soup_sizes.map((s) => (
               <span
                 key={s}
                 className="rounded-full bg-black/18 px-4 py-2.5"
@@ -143,17 +136,17 @@ export default function MenuSection() {
 
         <div className="animate-reveal-view relative mt-[70px]">
           <span className="pointer-events-none absolute -top-[52px] -left-0.5 font-bricolage text-[clamp(70px,13vw,160px)] leading-none font-extrabold tracking-[-0.04em] whitespace-nowrap text-cream/5">
-            GRILLED
+            {menuCopy.hot_sandwiches_watermark}
           </span>
           <h3 className="relative m-0 font-bricolage text-[clamp(26px,3.5vw,40px)] font-extrabold text-cream">
-            Grilled Hot Sandwiches
+            {menuCopy.hot_sandwiches_heading}
           </h3>
           <p className="relative mt-2 text-[13px] font-bold tracking-[0.08em] text-green-light uppercase">
-            Pressed hot off the grill
+            {menuCopy.hot_sandwiches_subheading}
           </p>
         </div>
         <div className="mt-[26px] grid grid-cols-[repeat(auto-fit,minmax(270px,1fr))] gap-[18px]">
-          {hotSandwiches.map((h) => (
+          {menu.hot_sandwiches.map((h) => (
             <div
               key={h.num}
               className="animate-reveal-view relative overflow-hidden rounded-mm border-t-4 border-accent bg-cream px-6 pt-[26px] pb-6 text-green-dark transition-[transform,box-shadow] duration-200 hover:-translate-y-[7px] hover:shadow-[0_26px_46px_-22px_rgba(0,0,0,0.6)]"
@@ -163,18 +156,18 @@ export default function MenuSection() {
               </span>
               <span
                 className={`absolute top-[18px] right-[18px] rounded-full px-[13px] py-[7px] font-bricolage text-[15px] font-extrabold ${
-                  h.accentPrice
+                  h.accent_price
                     ? "bg-accent text-white"
                     : "bg-green-dark text-cream"
                 }`}
               >
-                {h.price}
+                {h.price_display}
               </span>
               <h4 className="relative mt-0.5 max-w-[74%] font-bricolage text-[23px] font-extrabold">
                 {h.name}
               </h4>
               <p className="relative mt-2.5 text-[15.5px] leading-snug text-text-muted">
-                {h.desc}
+                {h.description}
               </p>
             </div>
           ))}

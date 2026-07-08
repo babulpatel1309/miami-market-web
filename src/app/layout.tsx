@@ -1,16 +1,20 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import favicon from "./image.png";
+import { getSiteSettingsForMetadata } from "@/lib/cms";
 
-export const metadata: Metadata = {
-  title: "Miami Market — Made-From-Scratch Deli · Milford, Ohio",
-  description:
-    "Family owned market & deli in Milford, Ohio. Made-from-scratch sandwiches, grilled hot subs, soups, a monthly $11 hot plate special, beer & wine, and a drive-thru.",
-  icons: {
-    icon: favicon.src,
-    apple: favicon.src,
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const site = await getSiteSettingsForMetadata();
+
+  return {
+    title: site.seo_title,
+    description: site.seo_description,
+    icons: {
+      icon: favicon.src,
+      apple: favicon.src,
+    },
+  };
+}
 
 export default function RootLayout({
   children,

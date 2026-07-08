@@ -1,66 +1,54 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ACCENT } from "@/constants/site";
+import type { OpenStatusContent, StructuredHourRow } from "@/lib/cms";
+import { computeWebsiteStatus } from "@/lib/compute-website-status";
 import type { OpenStatus } from "@/types/status.types";
 
-const DAY_NAMES = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
-
-// Deli & Drive-Thru run 10–8 Mon–Sat; the Drive-Thru also opens Sun 11–5.
-export function computeStatus(now: Date): OpenStatus {
-  const day = now.getDay();
-  const hr = now.getHours() + now.getMinutes() / 60;
-  const weekday = day >= 1 && day <= 6;
-  const deliOpen = weekday && hr >= 10 && hr < 20;
-  const dtOpen = (weekday && hr >= 10 && hr < 20) || (day === 0 && hr >= 11 && hr < 17);
-
-  let statusOpen: boolean;
-  let statusLabel: string;
-  let statusSub: string;
-  if (deliOpen) {
-    statusOpen = true;
-    statusLabel = "Open Now";
-    statusSub = "Deli & Drive-Thru — open until 8 PM today";
-  } else if (dtOpen) {
-    statusOpen = true;
-    statusLabel = "Drive-Thru Open";
-    statusSub = "Open until " + (day === 0 ? "5 PM" : "8 PM") + " today";
-  } else {
-    statusOpen = false;
-    statusLabel = "Closed Right Now";
-    statusSub = day === 0 ? "Drive-Thru opens Sunday at 11 AM" : "We open at 10 AM";
-  }
-
+function mapServerStatus(initial: OpenStatusContent): OpenStatus {
   return {
-    statusOpen,
-    statusLabel,
-    statusSub,
-    dayName: DAY_NAMES[day],
-    signWord: statusOpen ? "OPEN" : "CLOSED",
-    statusDot: statusOpen ? "#3DBE54" : ACCENT,
-    todayIdx: day,
+    statusOpen: initial.is_open_now,
+    statusLabel: initial.status_label,
+    statusSub: initial.status_sub,
+    dayName: initial.day_name,
+    signWord: initial.sign_word,
+    statusDot: initial.status_dot,
+    todayIdx: initial.today_idx,
   };
 }
 
-// Returns null until mounted to avoid a server/client time mismatch, then
-// recomputes every minute.
-export function useOpenStatus(): OpenStatus | null {
-  const [status, setStatus] = useState<OpenStatus | null>(null);
+function mapComputedStatus(status: OpenStatusContent): OpenStatus {
+  return {
+    statusOpen: status.is_open_now,
+    statusLabel: status.status_label,
+    statusSub: status.status_sub,
+    dayName: status.day_name,
+    signWord: status.sign_word,
+    statusDot: status.status_dot,
+    todayIdx: status.today_idx,
+  };
+}
+
+export function useOpenStatus(
+  structuredHours: StructuredHourRow[],
+  initial: OpenStatusContent,
+): OpenStatus | null {
+  const [status, setStatus] = useState<OpenStatus | null>(() =>
+    mapServerStatus(initial),
+  );
 
   useEffect(() => {
-    const update = () => setStatus(computeStatus(new Date()));
+    const update = () => {
+      if (structuredHours.length > 0) {
+        setStatus(mapComputedStatus(computeWebsiteStatus(structuredHours)));
+      } else {
+        setStatus(mapServerStatus(initial));
+      }
+    };
     update();
     const id = setInterval(update, 60000);
     return () => clearInterval(id);
-  }, []);
+  }, [structuredHours, initial]);
 
   return status;
 }

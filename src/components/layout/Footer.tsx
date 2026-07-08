@@ -1,7 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-import { CONTACT, SOCIAL_LINKS } from "@/constants/site";
+import { getWebsiteContent } from "@/lib/cms";
 
-export default function Footer() {
+export default async function Footer() {
+  const { site, social_links: socialLinks } = await getWebsiteContent();
+
   return (
     <footer className="bg-green-dark px-6 py-14 pb-10 text-text-light">
       <div className="mx-auto flex max-w-[1140px] flex-wrap items-center justify-between gap-8">
@@ -12,13 +14,13 @@ export default function Footer() {
             className="block h-[62px] w-auto opacity-95 brightness-0 invert"
           />
           <p className="mt-4 text-[15px] leading-relaxed">
-            {CONTACT.addressFull}
+            {site.address_full}
             <br />
-            {CONTACT.phone} · Fax {CONTACT.fax}
+            {site.phone} · Fax {site.fax}
           </p>
         </div>
         <div className="flex flex-wrap gap-3">
-          {SOCIAL_LINKS.map((s) => (
+          {socialLinks.map((s) => (
             <a
               key={s.label}
               href={s.href}
