@@ -1,7 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
-import { DIRECTIONS_URL } from "@/constants/site";
+import { getWebsiteContent } from "@/lib/cms";
 
-export default function Hero() {
+export default async function Hero() {
+  const content = await getWebsiteContent();
+  const hero = content.hero;
+  const directionsUrl = content.site.directions_url;
+
   return (
     <section
       id="top"
@@ -9,38 +13,36 @@ export default function Hero() {
     >
       <div>
         <span className="inline-flex animate-rise items-center gap-[9px] rounded-full bg-green/12 px-4 py-[9px] text-[12.5px] font-extrabold tracking-[0.16em] text-green-dark uppercase">
-          Milford, Ohio · Family Owned
+          {hero.badge_text}
         </span>
         <h1 className="mt-5 font-bricolage text-[clamp(40px,7vw,86px)] leading-[0.92] font-extrabold tracking-tight">
           <span className="animate-rise-05 block text-[clamp(40px,7vw,86px)] text-transparent [-webkit-text-stroke:2px_#143D22]">
-            Famous
+            {hero.heading_line1}
           </span>
           <span className="animate-rise-16 mt-1 block text-[clamp(30px,4.6vw,56px)] text-green-dark">
-            Cranberry-Walnut Chicken Salad
+            {hero.heading_line2}
           </span>
           <span className="animate-rise-27 mt-0.5 block text-[clamp(34px,5.4vw,66px)] text-accent">
-            &amp; So Much More
+            {hero.heading_line3}
           </span>
         </h1>
         <p className="animate-rise-38 mt-6 max-w-[46ch] text-[clamp(16px,1.7vw,19px)] leading-[1.55] text-text-muted">
-          Located in Milford, Ohio, we serve made-from-scratch meals and deli
-          items. A locally operated and family owned business — we strive for
-          the best in everything we do.
+          {hero.subcopy}
         </p>
         <div className="animate-rise-48 mt-[30px] flex flex-wrap gap-3.5">
           <a
             href="#build"
             className="rounded-mm bg-green px-7 py-[15px] text-base font-bold text-white no-underline transition-[background,transform] duration-150 hover:-translate-y-0.5 hover:bg-green-dark"
           >
-            See the Menu
+            {hero.cta_primary_label}
           </a>
           <a
-            href={DIRECTIONS_URL}
+            href={directionsUrl}
             target="_blank"
             rel="noopener"
             className="rounded-mm border-2 border-green-dark/25 bg-transparent px-[26px] py-[13px] text-base font-bold text-green-dark no-underline transition-[border-color,background] duration-150 hover:border-green hover:bg-green/6"
           >
-            Get Directions
+            {hero.cta_secondary_label}
           </a>
         </div>
       </div>
@@ -48,7 +50,7 @@ export default function Hero() {
       <div className="animate-rise-20 relative">
         <div className="absolute inset-[16px_-16px_-16px_16px] rounded-mm bg-accent opacity-16" />
         <img
-          src="/images/hero-meal.jpeg"
+          src={hero.image_url ?? "/images/hero-meal.jpeg"}
           alt="A made-from-scratch fried chicken meal"
           className="relative block h-[clamp(330px,42vw,470px)] w-full rounded-mm object-cover shadow-[0_34px_64px_-26px_rgba(20,61,34,0.55)]"
         />
@@ -94,10 +96,10 @@ export default function Hero() {
           </text>
         </svg>
         <div className="absolute -top-4 -right-2.5 animate-bob rounded-full border-2 border-accent bg-white px-[18px] py-[13px] font-bricolage text-sm font-extrabold text-green-dark shadow-[0_14px_30px_-12px_rgba(20,61,34,0.45)]">
-          Beer &amp; Wine
+          {hero.floating_badge1_text}
         </div>
         <div className="absolute right-[-14px] bottom-[34px] animate-float rounded-full bg-gold px-[18px] py-[13px] font-bricolage text-sm font-extrabold text-green-dark shadow-[0_14px_30px_-12px_rgba(20,61,34,0.45)]">
-          Drive-Thru
+          {hero.floating_badge2_text}
         </div>
       </div>
     </section>
