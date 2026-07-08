@@ -1,7 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 import { DIRECTIONS_URL } from "@/constants/site";
+import { getWebsiteContent } from "@/lib/cms";
 
-export default function Hero() {
+export default async function Hero() {
+  const { hero } = await getWebsiteContent();
+
   return (
     <section
       id="top"
@@ -9,23 +12,21 @@ export default function Hero() {
     >
       <div>
         <span className="inline-flex animate-rise items-center gap-[9px] rounded-full bg-green/12 px-4 py-[9px] text-[12.5px] font-extrabold tracking-[0.16em] text-green-dark uppercase">
-          Milford, Ohio · Family Owned
+          {hero.badge_text}
         </span>
         <h1 className="mt-5 font-bricolage text-[clamp(40px,7vw,86px)] leading-[0.92] font-extrabold tracking-tight">
           <span className="animate-rise-05 block text-[clamp(40px,7vw,86px)] text-transparent [-webkit-text-stroke:2px_#143D22]">
-            Famous
+            {hero.heading_line1}
           </span>
           <span className="animate-rise-16 mt-1 block text-[clamp(30px,4.6vw,56px)] text-green-dark">
-            Cranberry-Walnut Chicken Salad
+            {hero.heading_line2}
           </span>
           <span className="animate-rise-27 mt-0.5 block text-[clamp(34px,5.4vw,66px)] text-accent">
-            &amp; So Much More
+            {hero.heading_line3}
           </span>
         </h1>
         <p className="animate-rise-38 mt-6 max-w-[46ch] text-[clamp(16px,1.7vw,19px)] leading-[1.55] text-text-muted">
-          Located in Milford, Ohio, we serve made-from-scratch meals and deli
-          items. A locally operated and family owned business — we strive for
-          the best in everything we do.
+          {hero.subheadline}
         </p>
         <div className="animate-rise-48 mt-[30px] flex flex-wrap gap-3.5">
           <a
@@ -47,11 +48,13 @@ export default function Hero() {
 
       <div className="animate-rise-20 relative">
         <div className="absolute inset-[16px_-16px_-16px_16px] rounded-mm bg-accent opacity-16" />
-        <img
-          src="/images/hero-meal.jpeg"
-          alt="A made-from-scratch fried chicken meal"
-          className="relative block h-[clamp(330px,42vw,470px)] w-full rounded-mm object-cover shadow-[0_34px_64px_-26px_rgba(20,61,34,0.55)]"
-        />
+        {hero.image_url && (
+          <img
+            src={hero.image_url}
+            alt="A made-from-scratch fried chicken meal"
+            className="relative block h-[clamp(330px,42vw,470px)] w-full rounded-mm object-cover shadow-[0_34px_64px_-26px_rgba(20,61,34,0.55)]"
+          />
+        )}
         <svg
           viewBox="0 0 200 200"
           className="absolute -bottom-[30px] -left-[34px] z-3 h-[clamp(112px,13vw,148px)] w-[clamp(112px,13vw,148px)] animate-spin-slow drop-shadow-[0_10px_22px_rgba(20,61,34,0.4)]"
