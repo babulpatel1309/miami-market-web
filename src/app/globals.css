@@ -19,6 +19,8 @@
 
   --font-bricolage: "Bricolage Grotesque", sans-serif;
   --font-hanken: "Hanken Grotesk", system-ui, sans-serif;
+  --font-playfair: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-cormorant: "Cormorant Garamond", Georgia, "Times New Roman", serif;
 
   --radius-mm: 16px;
   --radius-mm-lg: 20px;

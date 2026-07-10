@@ -4,9 +4,11 @@ import { getWebsiteContent } from "@/lib/cms";
 function MeatRow({ meat }: { meat: MenuMeat }) {
   return (
     <div className="flex items-baseline gap-2 border-b border-green-dark/7 py-2">
-      <span className="font-semibold">{meat.name}</span>
+      <span className="font-cormorant text-[17px] font-medium tracking-[0.01em]">
+        {meat.name}
+      </span>
       <span className="flex-1 -translate-y-[5px] border-b-2 border-dotted border-green-dark/26" />
-      <span className="font-bricolage font-extrabold text-accent">
+      <span className="font-bricolage text-[15.5px] font-extrabold text-accent">
         ${meat.price.toFixed(2)}
       </span>
     </div>
@@ -24,14 +26,14 @@ function BuildGroup({
 }) {
   return (
     <div>
-      <h4 className="mb-3.5 font-bricolage text-[13px] font-extrabold tracking-[0.1em] text-green-dark uppercase">
+      <h4 className="mb-3.5 font-hanken text-[12px] font-bold tracking-[0.12em] text-green-dark uppercase">
         {title}
       </h4>
       <div className="flex flex-wrap gap-[7px]">
         {items.map((i) => (
           <span
             key={i}
-            className="rounded-full bg-green/10 px-3 py-1.5 text-[13.5px]"
+            className="rounded-full bg-green/10 px-3 py-1.5 font-hanken text-[13.5px] font-medium"
           >
             {i}
           </span>
@@ -39,7 +41,7 @@ function BuildGroup({
         {addOns?.map((a) => (
           <span
             key={a.name}
-            className="rounded-full bg-gold/28 px-3 py-1.5 text-[13.5px] font-bold"
+            className="rounded-full bg-gold/28 px-3 py-1.5 font-hanken text-[13.5px] font-semibold"
           >
             {a.name} {a.price_display}
           </span>
@@ -57,13 +59,13 @@ export default async function MenuSection() {
     <section id="build" className="bg-green-dark py-[90px] text-cream">
       <div className="mx-auto max-w-[1240px] px-6">
         <div className="animate-reveal-view mx-auto mb-[50px] max-w-[660px] text-center">
-          <span className="font-bricolage text-[13px] font-extrabold tracking-[0.16em] text-green-light uppercase">
+          <span className="font-cormorant text-[12.5px] tracking-[0.18em] text-green-light uppercase">
             {menuCopy.eyebrow}
           </span>
-          <h2 className="mt-3.5 font-bricolage text-[clamp(34px,5.4vw,62px)] leading-[0.98] font-extrabold tracking-tight">
+          <h2 className="mt-3.5 font-playfair text-[clamp(34px,5.4vw,62px)] leading-[0.98] font-bold tracking-tight">
             {menuCopy.heading}
           </h2>
-          <p className="mt-[18px] text-[17px] leading-normal text-text-light">
+          <p className="mt-[18px] font-cormorant text-[17px] leading-normal text-text-light">
             {menuCopy.subheading}
           </p>
         </div>
@@ -74,15 +76,15 @@ export default async function MenuSection() {
             <div className="text-center">
               <div className="flex items-center justify-center gap-3.5 text-accent">
                 <span className="h-[1.5px] w-[42px] bg-current opacity-50" />
-                <span className="font-bricolage text-xs font-extrabold tracking-[0.3em] uppercase">
+                <span className="font-cormorant text-[11px] tracking-[0.3em] uppercase">
                   {menuCopy.deli_counter_eyebrow}
                 </span>
                 <span className="h-[1.5px] w-[42px] bg-current opacity-50" />
               </div>
-              <h3 className="mt-3.5 font-bricolage text-[clamp(26px,3.6vw,40px)] font-extrabold tracking-tight">
+              <h3 className="mt-3.5 font-playfair text-[clamp(26px,3.6vw,40px)] leading-[1.02] font-bold tracking-tight">
                 {menuCopy.deli_counter_heading}
               </h3>
-              <p className="mt-[9px] text-[14.5px] text-text-muted-2 italic">
+              <p className="mt-[9px] font-cormorant text-[16px] text-green-dark italic">
                 {menuCopy.deli_counter_subheading}
               </p>
             </div>
@@ -95,7 +97,7 @@ export default async function MenuSection() {
 
             <div className="my-10 flex items-center gap-4">
               <span className="h-px flex-1 bg-green-dark/18" />
-              <span className="font-bricolage text-xs font-extrabold tracking-[0.26em] text-accent uppercase">
+              <span className="font-cormorant text-[11px] tracking-[0.26em] text-accent uppercase">
                 {menuCopy.build_your_way_label}
               </span>
               <span className="h-px flex-1 bg-green-dark/18" />
@@ -115,14 +117,14 @@ export default async function MenuSection() {
 
         <div className="animate-reveal-view mt-[34px] flex flex-wrap items-center justify-between gap-5 rounded-mm bg-accent p-[30px]">
           <div>
-            <h3 className="m-0 font-bricolage text-[28px] font-extrabold text-white">
+            <h3 className="m-0 font-playfair text-[28px] font-bold text-white">
               {menuCopy.soups_heading}
             </h3>
-            <p className="mt-2 text-base text-white/92">
+            <p className="mt-2 font-hanken text-base text-white/92">
               {menuCopy.soups_subheading}
             </p>
           </div>
-          <div className="flex flex-wrap gap-2.5 font-bricolage font-bold text-white">
+          <div className="flex flex-wrap gap-2.5 font-hanken text-[14px] font-semibold text-white">
             {menu.soup_sizes.map((s) => (
               <span
                 key={s}
@@ -138,10 +140,10 @@ export default async function MenuSection() {
           <span className="pointer-events-none absolute -top-[52px] -left-0.5 font-bricolage text-[clamp(70px,13vw,160px)] leading-none font-extrabold tracking-[-0.04em] whitespace-nowrap text-cream/5">
             {menuCopy.hot_sandwiches_watermark}
           </span>
-          <h3 className="relative m-0 font-bricolage text-[clamp(26px,3.5vw,40px)] font-extrabold text-cream">
+          <h3 className="relative m-0 font-playfair text-[clamp(26px,3.5vw,40px)] font-bold text-cream">
             {menuCopy.hot_sandwiches_heading}
           </h3>
-          <p className="relative mt-2 text-[13px] font-bold tracking-[0.08em] text-green-light uppercase">
+          <p className="relative mt-2 font-hanken text-[12px] font-bold tracking-[0.1em] text-green-light uppercase">
             {menuCopy.hot_sandwiches_subheading}
           </p>
         </div>
@@ -163,10 +165,10 @@ export default async function MenuSection() {
               >
                 {h.price_display}
               </span>
-              <h4 className="relative mt-0.5 max-w-[74%] font-bricolage text-[23px] font-extrabold">
+              <h4 className="relative mt-0.5 max-w-[74%] font-playfair text-[23px] font-bold">
                 {h.name}
               </h4>
-              <p className="relative mt-2.5 text-[15.5px] leading-snug text-text-muted">
+              <p className="relative mt-2.5 font-hanken text-[15px] leading-snug text-text-muted">
                 {h.description}
               </p>
             </div>
