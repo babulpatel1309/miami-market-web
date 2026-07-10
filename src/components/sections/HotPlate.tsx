@@ -1,5 +1,5 @@
-/* eslint-disable @next/next/no-img-element */
 import { getWebsiteContent } from "@/lib/cms";
+import HotPlateImageClient from "@/components/sections/HotPlateImageClient";
 
 export default async function HotPlate() {
   const { hot_plate: hotPlate, menu } = await getWebsiteContent();
@@ -56,10 +56,10 @@ export default async function HotPlate() {
           <div className="absolute top-1.5 -right-3.5 h-[26px] w-[74px] rotate-[38deg] bg-gold/55 shadow-[0_2px_6px_rgba(0,0,0,0.1)]" />
           <div className="absolute bottom-[34px] -left-4 h-[26px] w-[74px] rotate-[34deg] bg-accent/40 shadow-[0_2px_6px_rgba(0,0,0,0.1)]" />
           {hotPlate.image_url && (
-            <img
-              src={hotPlate.image_url}
-              alt="This month's hot plate special menu"
-              className="relative block w-full border border-green-dark/8"
+            <HotPlateImageClient
+              imageUrl={hotPlate.image_url}
+              menuPdfUrl={hotPlate.menu_pdf_url}
+              caption={hotPlate.image_caption}
             />
           )}
           <p className="mt-3.5 text-center font-bricolage text-sm font-bold text-text-muted">

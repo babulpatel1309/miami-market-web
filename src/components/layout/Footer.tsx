@@ -6,12 +6,12 @@ export default async function Footer() {
 
   return (
     <footer className="bg-green-dark px-6 py-14 pb-10 text-text-light">
-      <div className="mx-auto flex max-w-[1140px] flex-wrap items-center justify-between gap-8">
-        <div>
+      <div className="mx-auto flex max-w-[1140px] flex-col items-center gap-8 md:flex-row md:items-start md:justify-between">
+        <div className="flex flex-col items-center text-center md:items-start md:text-left">
           <img
             src="/images/logo.png"
             alt="Miami Market"
-            className="block h-[62px] w-auto opacity-95 brightness-0 invert"
+            className="h-[58px] w-auto brightness-0 invert opacity-95"
           />
           <p className="mt-4 text-[15px] leading-relaxed">
             {site.address_full}
@@ -19,7 +19,7 @@ export default async function Footer() {
             {site.phone} · Fax {site.fax}
           </p>
         </div>
-        <div className="flex flex-wrap gap-3">
+        <div className="flex flex-wrap justify-center gap-3 md:justify-end md:pt-1">
           {socialLinks.map((s) => (
             <a
               key={s.label}
@@ -33,7 +33,7 @@ export default async function Footer() {
           ))}
         </div>
       </div>
-      <div className="mx-auto mt-9 max-w-[1140px] border-t border-cream/14 pt-6 text-sm opacity-70">
+      <div className="mx-auto mt-9 max-w-[1140px] border-t border-cream/14 pt-6 text-center text-sm opacity-70 md:text-left">
         © Miami Market · Milford, Ohio · Family owned &amp; locally operated
       </div>
     </footer>

@@ -7,11 +7,11 @@ export default async function Nav() {
   return (
     <header className="sticky top-0 z-60 border-b border-green-dark/12 bg-cream/90 backdrop-blur-md">
       <nav className="mx-auto flex max-w-[1240px] flex-wrap items-center justify-between gap-[18px] px-6 py-[13px]">
-        <a href="#top" className="flex items-center gap-3 no-underline">
+        <a href="#top" className="flex shrink-0 items-center no-underline">
           <img
             src="/images/logo.png"
             alt="Miami Market"
-            className="block h-12 w-auto"
+            className="block h-14 w-auto max-w-[min(220px,42vw)] object-contain object-left"
           />
         </a>
         <div className="flex flex-wrap items-center gap-1">
