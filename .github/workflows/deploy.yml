@@ -1,0 +1,42 @@
+name: Deploy Miami Market Web to DigitalOcean
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to Droplet via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DROPLET_HOST }}
+          username: ${{ secrets.DROPLET_USER }}
+          key: ${{ secrets.DROPLET_SSH_KEY }}
+          script: |
+            set -euo pipefail
+            cd /home/ubuntu/miami-market-web
+
+            echo "⬇️ Syncing to origin/develop..."
+            # Never git pull on a deploy target — npm install can dirty package-lock.json.
+            # Hard reset matches remote; .env and .env.local are gitignored and untouched.
+            git fetch origin develop
+            git reset --hard origin/develop
+
+            echo "📦 Installing dependencies..."
+            npm ci
+
+            echo "🏗️ Building Next.js app..."
+            npm run build
+
+            echo "♻️ Restarting PM2..."
+            pm2 restart mm-web
+
+            echo "✅ Deployment complete!"
